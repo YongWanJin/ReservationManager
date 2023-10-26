@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+  <connection>
+    <productId>com.tomato.db.mysql</productId>
+    <productName>MySQL 5.1 ~ 8.0</productName>
+    <name>mysql</name>
+    <driverJars>
+      <driverJar>C:\Users\whu72\OneDrive\바탕 화면\Backend\_88_5_ReservationManager\ReservationManager\lib\mysql-connector-j-8.1.0.jar</driverJar>
+    </driverJars>
+    <driverClass>com.mysql.cj.jdbc.Driver</driverClass>
+    <url>jdbc:mysql://43.202.116.172:3306/reservationDB?characterEncoding=utf8</url>
+    <properties>
+      <password>1234</password>
+      <databaseName>reservationDB</databaseName>
+      <port>3306</port>
+      <host>43.202.116.172</host>
+      <characterEncoding>utf8</characterEncoding>
+      <user>testDB_admin</user>
+    </properties>
+    <extendedProperties />
+  </connection>
+</database>
+

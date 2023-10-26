@@ -20,15 +20,15 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        return this.memberRepository.findById(id)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.memberRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
     }
 
-    /** 회원 가입 기능 */
+    /** 회원 가입 기능 : 새로운 회원 정보를 데이터베이스에 저장한다.*/
     public MemberEntity register(Auth.SingUp member) {
         // 아이디 중복 여부 확인
-        boolean exists = this.memberRepository.existsById(member.getId());
+        boolean exists = this.memberRepository.existsByUsername(member.getUsername());
         if(exists){
             throw new RuntimeException("이미 사용중인 아이디입니다.");
         }
@@ -46,7 +46,7 @@ public class MemberService implements UserDetailsService {
     /** 로그인을 위한 인증 */
     public MemberEntity authenticate(Auth.SignIn member) {
         // 아이디 비교
-        MemberEntity user = this.memberRepository.findById(member.getId())
+        MemberEntity user = this.memberRepository.findByUsername(member.getUsername())
                 .orElseThrow(()->new RuntimeException("해당 아이디가 존재하지 않습니다."));
 
         // 패스워드 비교

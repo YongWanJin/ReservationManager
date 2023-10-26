@@ -6,6 +6,6 @@ import zerobase.ReservationManager.data.entity.MemberEntity;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
-    Optional<MemberEntity> findById(String id);
-    boolean existsById(String id);
+    Optional<MemberEntity> findByUsername(String username);
+    boolean existsByUsername(String username);
 }

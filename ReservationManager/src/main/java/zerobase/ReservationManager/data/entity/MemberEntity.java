@@ -9,9 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /** 회원정보를 담고 있는 Entity
  * */
@@ -23,12 +21,16 @@ import java.util.stream.Collectors;
 @Entity(name = "MEMBER")
 public class MemberEntity implements UserDetails {
 
-    /** 아이디 (PK) */
+    /** 식별자 (PK) */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    /** 이름 */
+    /** 유저 아이디 (로그인용) */
     private String username;
+
+    /** 성함, 이름 */
+    private String username2;
 
     /** 휴대폰 번호 */
     private String phone;
@@ -37,19 +39,22 @@ public class MemberEntity implements UserDetails {
     private String password;
 
     /** 회원 유형 : 손님, 점장 */
-    private List<String> roles;
-
+    private String role;
+//    private List<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        auth.add(new SimpleGrantedAuthority(role));
+        return auth;
+//        return this.roles.stream()
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toList());
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override

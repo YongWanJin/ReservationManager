@@ -29,8 +29,8 @@ public class TokenProvider {
     private String secretKey;
 
     /** 사용자 식별을 위한 jwt 토큰을 발급하기 */
-    public String generateToken(String id, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(id);
+    public String generateToken(String username, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(username);
         claims.put(KEY_ROLES, roles);
 
         // 만료시간 설정

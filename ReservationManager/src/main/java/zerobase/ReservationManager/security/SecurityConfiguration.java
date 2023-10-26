@@ -4,13 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -25,13 +21,15 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/**/signup", "/**/signin").permitAll()
+        System.out.println("filterChain start");
+        http
+                .httpBasic().disable()
+                .csrf().disable()  // 이거 꼭 써줘야함.
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/auth/signup", "/auth/signin", "/test/*").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(this.authoenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        System.out.println("filterChain end");
         return http.build();
     }
-
-
-
 }

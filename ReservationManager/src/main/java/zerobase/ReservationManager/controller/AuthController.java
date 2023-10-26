@@ -10,6 +10,8 @@ import zerobase.ReservationManager.data.entity.MemberEntity;
 import zerobase.ReservationManager.security.TokenProvider;
 import zerobase.ReservationManager.service.MemberService;
 
+import java.util.ArrayList;
+
 /** 로그인, 회원가입, 인증 관련 컨트롤러 */
 @Slf4j
 @RestController
@@ -23,8 +25,11 @@ public class AuthController {
     /** 회원 가입 API */
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Auth.SingUp request){
+        System.out.println("sign up start");
         MemberEntity result = this.memberService.register(request);
+        System.out.println("sign up complete");
         return ResponseEntity.ok(result);
+        // 왜 Entity를 반환하는가? DTO 객체를 반환해야하지 않나?
     }
 
     /** 로그인 API */
@@ -33,7 +38,9 @@ public class AuthController {
         // 아이디와 패스워드가 일치하는지 확인
         MemberEntity member = this.memberService.authenticate(request);
         // 토큰 생성 및 반환
-        String token = this.tokenProvider.generateToken(member.getId(), member.getRoles());
+        ArrayList<String> role = new ArrayList<>();
+        role.add(member.getRole());
+        String token = this.tokenProvider.generateToken(member.getUsername(), role);
         return ResponseEntity.ok(token);
     }
 
