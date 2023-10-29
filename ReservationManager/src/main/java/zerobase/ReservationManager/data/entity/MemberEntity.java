@@ -21,7 +21,7 @@ import java.util.*;
 @Entity(name = "MEMBER")
 public class MemberEntity implements UserDetails {
 
-    /** 식별자 (PK) */
+    /** 회원 식별자 (PK) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;

@@ -1,5 +1,6 @@
 package zerobase.ReservationManager.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,15 @@ public class AuthController {
         role.add(member.getRole());
         String token = this.tokenProvider.generateToken(member.getUsername(), role);
         return ResponseEntity.ok(token);
+    }
+
+    /** 로그아웃 API */
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "로그아웃 완료";
+        // https://velog.io/@minwest/Spring-Security-jwt로-로그인로그아웃-구현하기
+        // 제로베이스 강의 레디스 캐시 서버 구축 선행할것.
     }
 
     @GetMapping("/test")

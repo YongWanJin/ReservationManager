@@ -61,7 +61,7 @@ public class TokenProvider {
         return !claims.getExpiration().before(new Date());
     }
 
-    /** jwt 토큰으로부터 인증 정보를 가져오기*/
+    /** jwt 토큰으로부터 인증 정보를 가져오기 */
     public Authentication getAuthetication(String jwt){
         UserDetails userDetails = this.memberService.loadUserByUsername(this.getId(jwt));
         // 사용자 정보와 사용자 권한이 담긴 객체를 반환
